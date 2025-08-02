@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+{% block title %}Add Profiles{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="/static/styles.css">
+
+<h2>Add Your Coding Profiles</h2>
+
+<form method="POST">
+    <input type="text" name="leetcode" placeholder="LeetCode Username" value="{{ profile[2] if profile else '' }}" required>
+    <input type="text" name="gfg" placeholder="GeeksforGeeks Username" value="{{ profile[4] if profile else '' }}">
+    <button type="submit">Save Profiles</button>
+</form>
+
+{% endblock %}
+

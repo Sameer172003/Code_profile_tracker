@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="/static/styles.css">
+
+<div class="dashboard-container">
+    <h2>Dashboard</h2>
+    <b><i><p>Welcome to your dashboard, {{ username }}</p></i></b>
+
+    <div class="card-container">
+       
+        <div class="platform-card total-card">
+            <h3>📊 Total Problems Solved</h3>
+            <p><strong>{{ total_solved }}</strong></p>
+            {% set leet = leetcode_data.totalSolved | default(0, true) %}
+            {% set gfg = gfg_data.total_solved | default(0, true) %}
+            {% set total = leet + gfg if leet + gfg > 0 else 1 %}
+            <h3 style="text-align: center;">📈 Platform Wise Solved Questions</h3>
+            <div class="progress-bar-container">
+                <div class="progress-leetcode" style="width: {{ (leet / total * 100) | round(1) }}%">
+                {{ leet }}
+            </div>
+            <div class="progress-gfg" style="width: {{ (gfg / total * 100) | round(1) }}%">
+                {{ gfg }}
+            </div>
+        </div>
+    
+    <div class="progress-labels">
+        <b><span style="color: #f89f1b;">LeetCode</span> |
+        <span style="color: #2e7d32;">GFG</span></b>
+    </div>
+</div>
+        <!-- LeetCode Card -->
+        <div class="platform-card leetcode-card">
+            <h3>🔥 LeetCode</h3>
+            <b><a href="https://leetcode.com/u/Sameer_ojha/" target="_blank" style="text-decoration: none;">Profile Link</a></b>
+            {% if leetcode_data.error %}
+                <p class="error">{{ leetcode_data.error }}</p>
+            {% elif leetcode_data.totalSolved %}
+                <ul>
+                    <li><strong>Total Solved:</strong> {{ leetcode_data.totalSolved }}</li>
+                    <li><strong>Easy:</strong> {{ leetcode_data.easySolved }}</li>
+                    <li><strong>Medium:</strong> {{ leetcode_data.mediumSolved }}</li>
+                    <li><strong>Hard:</strong> {{ leetcode_data.hardSolved }}</li>
+                </ul>
+            {% else %}
+                <p>No data available.</p>
+            {% endif %}
+        </div>
+
+        <!-- GFG Card -->
+        <div class="platform-card gfg-card">
+            <h3>🍃 GeeksforGeeks</h3>
+            <b><a href="https://www.geeksforgeeks.org/user/ma832v85fmwawvco6wyqw91665ku3fzufwwrtmxn/" target="_blank" style="text-decoration: none;">Profile Link</a></b>
+            {% if gfg_data.error %}
+                <p class="error">{{ gfg_data.error }}</p>
+            {% else %}
+                <ul>
+                    <li><strong>Total Solved:</strong> {{ gfg_data.total_solved }}</li>
+                    <li><strong>Coding Score:</strong> {{ gfg_data.coding_score }}</li>
+                    <li><strong>Easy:</strong> {{ gfg_data.easy_solved }}</li>
+                    <li><strong>Medium:</strong> {{ gfg_data.medium_solved }}</li>
+                    <li><strong>Hard:</strong> {{ gfg_data.hard_solved }}</li>
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Download Button -->
+    <div style="margin-top: 30px; text-align: center;">
+        <b><a href="#" onclick="window.print();" class="btn btn-logout" style="text-decoration: none;">📄 Download Your Coding Profile</a></b>
+    </div>
+</div>
+{% endblock %}
